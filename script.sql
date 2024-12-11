@@ -62,3 +62,23 @@ DELETE FROM membres WHERE id_membre = 2;
 
 -- Suppression d'une activité
 DELETE FROM activites WHERE id_activite = 2;
+
+-- Mise à jour des informations d'un membre
+UPDATE membres
+SET 
+    nom = 'mohammed',
+    prenom = 'moustir',
+    email = 'moustir.moha@example.com',
+    telephone = '0611225594'
+WHERE id_membre = 1;
+
+-- Mise à jour des informations d'une activite
+UPDATE activites
+SET 
+    nom_activite = 'CrossFit',
+    description = 'Un programme de conditionnement physique combinant halterophilie, gymnastique et cardio pour renforcer la force, l endurance et la flexibilite',
+    capacite = 33,
+    date_debut = '2024-12-20',
+    date_fin = '2024-12-21',
+    disponabilite = 1
+WHERE id_activite = 1;
