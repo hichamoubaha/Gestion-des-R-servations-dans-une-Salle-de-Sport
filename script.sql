@@ -53,3 +53,12 @@ VALUES
     (1, 1, '2024-12-10 10:00:00', 'Confirmee'),
     (2, 2, '2024-12-15 10:00:00', 'Annulee'),
     (3, 3, '2024-12-15 10:00:00', 'Confirmee');
+
+    -- Suppression d'une reservation
+DELETE FROM reservation WHERE id_reservation = 1;
+
+-- Suppression d'un membre
+DELETE FROM membres WHERE id_membre = 2;
+
+-- Suppression d'une activité
+DELETE FROM activites WHERE id_activite = 2;
