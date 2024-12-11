@@ -1,0 +1,2 @@
+CREATE DATABASE sport1;
+USE sport1;
