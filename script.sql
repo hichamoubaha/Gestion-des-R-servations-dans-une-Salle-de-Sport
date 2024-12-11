@@ -39,3 +39,11 @@ VALUES
     ('oumaima', 'Bramid', 'oumaima5@gmail.com', '0744145447'),
     ('ousssama', 'Eddarkaoui', 'Eddarkaoui77@gmail.com', '0632114544'),
     ('abdelah', 'Elmalky', 'Elmalky@gmail.com', '0632114896');
+
+    -- Insertion des données dans le tableau activites
+INSERT INTO activites (nom_activite, description, capacite, date_debut, date_fin, disponabilite)
+VALUES 
+    ('Yoga', 'une pratique holistique alliant postures, respiration et méditation pour améliorer flexibilité, force et bien-être mental', 50, '2024-12-10', '2024-12-30', 1),
+    ('Boxing', 'Un sport de combat combinant des techniques de frappe et de défense pour améliorer la condition physique, l\endurance et la coordination.', 30, '2024-12-10', '2024-12-30', 1),
+    ('Natation', 'Un exercice complet qui améliore la condition physique, la flexibilité et la force, tout en offrant un entraînement cardiovasculaire à faible impact.', 50, '2024-12-10', '2024-12-30', 1);
+    
