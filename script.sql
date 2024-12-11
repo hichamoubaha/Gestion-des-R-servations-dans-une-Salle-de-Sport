@@ -82,3 +82,21 @@ SET
     date_fin = '2024-12-21',
     disponabilite = 1
 WHERE id_activite = 1;
+
+ALTER TABLE reservation 
+    ADD COLUMN prix_total DECIMAL(10, 2);
+
+    ALTER TABLE membres 
+    ADD COLUMN  adresse TEXT;
+    
+SELECT 
+    m.id_membre,
+    m.nom,
+    m.prenom,
+    r.id_reservation,
+    r.date_reservation,
+    r.statut
+FROM 
+    membres m
+INNER JOIN 
+    reservation r ON m.id_membre = r.id_membre;
