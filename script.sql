@@ -20,3 +20,14 @@ CREATE TABLE activites (
     date_fin DATE,
     disponabilite TINYINT(1)
 );
+
+-- Creation du tableau reservation
+CREATE TABLE reservation (
+    id_reservation INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    id_membre INT NOT NULL,
+    id_activite INT NOT NULL,
+    date_reservation DATETIME,
+    statut ENUM('Confirmee', 'Annulee'),
+    FOREIGN KEY (id_membre) REFERENCES membres(id_membre) ON DELETE CASCADE,
+    FOREIGN KEY (id_activite) REFERENCES activites(id_activite) ON DELETE CASCADE
+);
