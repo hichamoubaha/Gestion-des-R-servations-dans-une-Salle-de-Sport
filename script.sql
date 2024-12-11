@@ -46,4 +46,10 @@ VALUES
     ('Yoga', 'une pratique holistique alliant postures, respiration et méditation pour améliorer flexibilité, force et bien-être mental', 50, '2024-12-10', '2024-12-30', 1),
     ('Boxing', 'Un sport de combat combinant des techniques de frappe et de défense pour améliorer la condition physique, l\endurance et la coordination.', 30, '2024-12-10', '2024-12-30', 1),
     ('Natation', 'Un exercice complet qui améliore la condition physique, la flexibilité et la force, tout en offrant un entraînement cardiovasculaire à faible impact.', 50, '2024-12-10', '2024-12-30', 1);
-    
+
+    -- Insertion des donnees dans le tableau reservation
+INSERT INTO reservation (id_membre, id_activite, date_reservation, statut)
+VALUES 
+    (1, 1, '2024-12-10 10:00:00', 'Confirmee'),
+    (2, 2, '2024-12-15 10:00:00', 'Annulee'),
+    (3, 3, '2024-12-15 10:00:00', 'Confirmee');
