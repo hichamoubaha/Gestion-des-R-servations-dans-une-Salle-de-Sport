@@ -31,3 +31,11 @@ CREATE TABLE reservation (
     FOREIGN KEY (id_membre) REFERENCES membres(id_membre) ON DELETE CASCADE,
     FOREIGN KEY (id_activite) REFERENCES activites(id_activite) ON DELETE CASCADE
 );
+-- Insertion des donnees dans le tableau membres
+INSERT INTO membres (nom, prenom, email, telephone)
+VALUES 
+    ('Hanane', 'Oubaha', 'hanane@gmail.com', '0632114578'),
+    ('Hicham', 'Oubaha', 'hicham@gmail.com', '0632114560'),
+    ('oumaima', 'Bramid', 'oumaima5@gmail.com', '0744145447'),
+    ('ousssama', 'Eddarkaoui', 'Eddarkaoui77@gmail.com', '0632114544'),
+    ('abdelah', 'Elmalky', 'Elmalky@gmail.com', '0632114896');
