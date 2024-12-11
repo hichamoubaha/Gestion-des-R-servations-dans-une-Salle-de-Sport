@@ -9,3 +9,14 @@ CREATE TABLE membres (
     email VARCHAR(100) UNIQUE,
     telephone VARCHAR(15)
 );
+
+-- Creation du tableau activites
+CREATE TABLE activites (
+    id_activite INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    nom_activite VARCHAR(100),
+    description TEXT,
+    capacite INT(11),
+    date_debut DATE,
+    date_fin DATE,
+    disponabilite TINYINT(1)
+);
