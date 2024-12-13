@@ -13,8 +13,9 @@
         <div class="flex space-x-8">
             <a href="index.php" class="text-white font-bold">Home</a>
             <a href="membres.php" class="text-white font-bold">Members</a>
+            <a href="activites.php" class="text-white font-bold">Activities</a>
             <a href="reservations.php" class="text-white font-bold">Reservations</a>
-            <a href="#" class="text-white font-bold">CONTACT</a>
+            <a href="our-community.php" class="text-white font-bold">Our Community</a>
         </div>
         <div class="relative">
             <input type="text" placeholder="SEARCH" class="px-4 py-1 rounded-full w-48 focus:outline-none">
