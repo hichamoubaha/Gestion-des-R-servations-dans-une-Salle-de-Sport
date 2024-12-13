@@ -1,12 +1,34 @@
 <?php
 include('db.php');
-// Récupération des membres
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_membre = $_POST['membre'];
+    $id_activite = $_POST['activite'];
+    $date_reservation = $_POST['date_reservation'];
+    $statut = $_POST['statut'];
+
+    $sql = "INSERT INTO reservation (id_membre, id_activite, date_reservation, statut) 
+            VALUES ('$id_membre', '$id_activite', '$date_reservation', '$statut')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "<p class='bg-green-100 border-l-4 border-green-500 text-green-700 p-4'>Réservation ajoutée avec succès.</p>";
+    } else {
+        echo "<p class='bg-red-100 border-l-4 border-red-500 text-red-700 p-4'>Erreur : " . $conn->error . "</p>";
+    }
+}
+
 $sql_membres = "SELECT id_membre, CONCAT(nom, ' ', prenom) AS nom_complet FROM membres";
 $result_membres = $conn->query($sql_membres);
 
-// Récupération des activités
 $sql_activites = "SELECT id_activite, nom_activite FROM activites";
 $result_activites = $conn->query($sql_activites);
+
+$sql_reservations = "SELECT r.id_reservation, m.nom, m.prenom, a.nom_activite, r.date_reservation, r.statut 
+                     FROM reservation r
+                     JOIN membres m ON r.id_membre = m.id_membre
+                     JOIN activites a ON r.id_activite = a.id_activite";
+$result_reservations = $conn->query($sql_reservations);
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +40,7 @@ $result_activites = $conn->query($sql_activites);
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-
-    <!-- Navigation Bar -->
+<body class="bg-gray-100">
     <nav class="bg-green-800 p-4 flex justify-between items-center">
         <div class="flex space-x-8">
             <a href="index.php" class="text-white font-bold">Home</a>
@@ -34,11 +54,9 @@ $result_activites = $conn->query($sql_activites);
         </div>
     </nav>
 
-    <!-- Formulaire de Réservation -->
     <div class="mt-8 max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-6">Formulaire de Réservation</h2>
-        <form action="reservationadd.php" method="POST" class="space-y-6">
-            <!-- Sélection du membre -->
+        <form action="" method="POST" class="space-y-6">
             <div class="mb-4">
                 <label for="membre" class="block text-gray-700">Nom du membre:</label>
                 <select name="membre" id="membre" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
@@ -55,7 +73,6 @@ $result_activites = $conn->query($sql_activites);
                 </select>
             </div>
 
-            <!-- Sélection de l'activité -->
             <div class="mb-4">
                 <label for="activite" class="block text-gray-700">Activité:</label>
                 <select name="activite" id="activite" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
@@ -72,13 +89,11 @@ $result_activites = $conn->query($sql_activites);
                 </select>
             </div>
 
-            <!-- Sélection de la date de réservation -->
             <div class="mb-4">
                 <label for="date_reservation" class="block text-gray-700">Date de réservation:</label>
                 <input type="datetime-local" name="date_reservation" id="date_reservation" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
             </div>
 
-            <!-- Sélection du statut -->
             <div class="mb-4">
                 <label for="statut" class="block text-gray-700">Statut:</label>
                 <select name="statut" id="statut" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
@@ -87,7 +102,6 @@ $result_activites = $conn->query($sql_activites);
                 </select>
             </div>
 
-            <!-- Bouton de soumission -->
             <div>
                 <button type="submit" class="w-full bg-green-800 text-white px-4 py-2 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
                     Soumettre
@@ -96,5 +110,37 @@ $result_activites = $conn->query($sql_activites);
         </form>
     </div>
 
+    <div class="mt-8 max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-bold mb-6">Liste des Réservations</h2>
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Membre</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Activité</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Date de Réservation</th>
+                    <th class="py-2 px-4 border-b border-gray-300 text-left">Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($result_reservations->num_rows > 0) {
+                    while ($row = $result_reservations->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td class='py-2 px-4 border-b border-gray-300'>" . htmlspecialchars($row['nom']) . " " . htmlspecialchars($row['prenom']) . "</td>";
+                        echo "<td class='py-2 px-4 border-b border-gray-300'>" . htmlspecialchars($row['nom_activite']) . "</td>";
+                        echo "<td class='py-2 px-4 border-b border-gray-300'>" . htmlspecialchars($row['date_reservation']) . "</td>";
+                        echo "<td class='py-2 px-4 border-b border-gray-300'>" . htmlspecialchars($row['statut']) . "</td>";
+                        echo "</tr>";
+                    }
+                } else {
+                    echo "<tr><td colspan='4' class='py-2 px-4 border-b border-gray-300 text-center'>Aucune réservation trouvée.</td></tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
+<?php
+$conn->close();
+?>
