@@ -1,3 +1,31 @@
+<?php
+include('db.php');
+
+// Vérifier si le formulaire est soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupérer les données
+    $nom_activite = $_POST['nom_activite'];
+    $description = $_POST['description_activite'];
+    $capacite = $_POST['capacite_activite'];
+    $date_debut = $_POST['date_debut_activite'];
+    $date_fin = $_POST['date_fin_activite'];
+    $disponibilite = $_POST['disponibilite_activite'];
+
+    // Insertion des données
+    $sql = "INSERT INTO activites (nom_activite, description, capacite, date_debut, date_fin, disponabilite) 
+            VALUES ('$nom_activite', '$description', '$capacite', '$date_debut', '$date_fin', '$disponibilite')";
+
+    if ($conn->query($sql) === TRUE) {
+        $message = "Données enregistrées avec succès !";
+    } else {
+        $message = "Erreur : " . $conn->error;
+    }
+
+    // Fermer la connexion
+    $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,11 +50,18 @@
         </div>
     </nav>
 
-    <!-- Contenu Principal -->
+    <!-- Main Content -->
     <div class="container mx-auto mt-10">
         <h1 class="text-4xl font-bold text-center text-yellow-400 mb-6">Inscription à une Activité</h1>
+
+        <?php if (isset($message)) : ?>
+            <div class="bg-green-500 text-white text-center p-3 rounded mb-4">
+                <?php echo $message; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="bg-white p-8 rounded-lg shadow-lg max-w-md mx-auto">
-            <form action="activitesadd.php" method="POST">
+            <form action="" method="POST">
                 <div class="mb-4">
                     <label for="nom_activite" class="block text-gray-700 font-bold mb-2">Nom de l'activité:</label>
                     <input type="text" id="nom_activite" name="nom_activite" class="w-full px-3 py-2 border rounded-lg" required>

@@ -12,18 +12,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             VALUES ('$id_membre', '$id_activite', '$date_reservation', '$statut')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "<p class='bg-green-100 border-l-4 border-green-500 text-green-700 p-4'>Réservation ajoutée avec succès.</p>";
+        $message = "Réservation ajoutée avec succès.";
     } else {
-        echo "<p class='bg-red-100 border-l-4 border-red-500 text-red-700 p-4'>Erreur : " . $conn->error . "</p>";
+        $message = "Erreur : " . $conn->error;
     }
 }
 
+// Fetch members and activities for dropdowns
 $sql_membres = "SELECT id_membre, CONCAT(nom, ' ', prenom) AS nom_complet FROM membres";
 $result_membres = $conn->query($sql_membres);
 
 $sql_activites = "SELECT id_activite, nom_activite FROM activites";
 $result_activites = $conn->query($sql_activites);
 
+// Fetch all reservations for the table
 $sql_reservations = "SELECT r.id_reservation, m.nom, m.prenom, a.nom_activite, r.date_reservation, r.statut 
                      FROM reservation r
                      JOIN membres m ON r.id_membre = m.id_membre
@@ -56,6 +58,11 @@ $result_reservations = $conn->query($sql_reservations);
 
     <div class="mt-8 max-w-2xl mx-auto bg-white p-8 rounded-lg shadow-md">
         <h2 class="text-2xl font-bold mb-6">Formulaire de Réservation</h2>
+        
+        <?php if (isset($message)) : ?>
+            <p class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4"><?= $message ?></p>
+        <?php endif; ?>
+
         <form action="" method="POST" class="space-y-6">
             <div class="mb-4">
                 <label for="membre" class="block text-gray-700">Nom du membre:</label>
@@ -141,6 +148,7 @@ $result_reservations = $conn->query($sql_reservations);
     </div>
 </body>
 </html>
+
 <?php
 $conn->close();
 ?>

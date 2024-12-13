@@ -1,12 +1,15 @@
 <?php
+// Informations de connexion à la base de données
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "sport1";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Connexion à la base de données
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Vérification de la connexion
+if (!$conn) {
+    die("Erreur de connexion : " . mysqli_connect_error());
 }
 ?>
