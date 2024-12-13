@@ -16,19 +16,19 @@ $result = $conn->query($sql);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-    <!-- Navigation Bar -->
-    <nav class="bg-green-800 p-4 flex justify-between items-center">
+   <!-- Navigation Bar -->
+   <nav class="bg-green-800 p-4 flex justify-between items-center">
         <div class="flex space-x-8">
             <a href="index.php" class="text-white font-bold">Home</a>
-            <a href="membres.php" class="text-white font-bold">Members</a>
+            <a href="membres.php" class="text-white font-bold">Inscription</a>
             <a href="activites.php" class="text-white font-bold">Activities</a>
             <a href="reservations.php" class="text-white font-bold">Reservations</a>
-            <a href="our-community.php" class="text-white font-bold">Our Community</a>
+            <a href="our-community.php" class="text-white font-bold">Members</a>
         </div>
         <div class="relative">
             <input type="text" placeholder="SEARCH" class="px-4 py-1 rounded-full w-48 focus:outline-none">
         </div>
-    </nav> 
+    </nav>
 
     <!-- Community Section -->
     <div class="mt-8 bg-white p-8 rounded-lg shadow-md mx-auto max-w-7xl">
