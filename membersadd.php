@@ -1,35 +1,28 @@
 <?php 
 include('db.php');
 
-// Vérification si les données du formulaire existent et ne sont pas vides
-if (isset($_POST['nom']) && isset($_POST['prenom']) && isset($_POST['email']) && isset($_POST['telephone'])) {
-    $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
-    $email = $_POST['email'];
-    $telephone = $_POST['telephone'];
+// Vérifier si le formulaire est soumis
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Récupérer et valider les données
+    $nom = $conn->real_escape_string($_POST['nom']);
+    $prenom = $conn->real_escape_string($_POST['prenom']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $telephone = $conn->real_escape_string($_POST['telephone']);
 
-    // Préparation de la requête SQL pour éviter les injections SQL
-    $stmt = $conn->prepare("INSERT INTO membres (nom, prenom, email, telephone) VALUES (?, ?, ?, ?)");
-    if ($stmt === false) {
-        die('Erreur de préparation de la requête : ' . htmlspecialchars($conn->error));
-    }
+    // Insertion des données
+    $sql = "INSERT INTO membres (nom, prenom, email, telephone) 
+            VALUES ('$nom', '$prenom', '$email', '$telephone')";
 
-    // Liaison des paramètres
-    $stmt->bind_param("ssss", $nom, $prenom, $email, $telephone);
-
-    // Exécution de la requête
-    if ($stmt->execute()) {
+    if ($conn->query($sql) === TRUE) {
         echo "Données enregistrées avec succès !";
     } else {
-        echo "Erreur : " . htmlspecialchars($stmt->error);
+        echo "Erreur : " . $conn->error;
     }
 
-    // Fermeture de la requête
-    $stmt->close();
+    // Fermer la connexion
+    $conn->close();
 } else {
-    echo "Tous les champs du formulaire ne sont pas remplis.";
+    echo "Méthode non autorisée.";
 }
-
-// Fermeture de la connexion
-$conn->close();
 ?>
+
